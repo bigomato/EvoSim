@@ -3,7 +3,7 @@ project(evosim)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(evosim src/main.cpp)
+add_executable(evosim src/main.cpp src/world.cpp src/world.h)
 
 include(FindPkgConfig)
 
