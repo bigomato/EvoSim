@@ -25,6 +25,11 @@ void Creature::move(vec2<float> delta) {
   this->distance_travelled += delta.length();
 }
 
+void Creature::setPos(vec2<float> pos) {
+  this->position = pos;
+  this->birth_position = pos;
+}
+
 void Creature::die() { this->alive = false; }
 
 void Creature::update(double dT) {
@@ -40,6 +45,6 @@ void Creature::draw(SDL_Renderer *renderer) {
   rect.y = this->position.y;
   rect.w = this->size;
   rect.h = this->size;
-  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+  SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
   SDL_RenderFillRect(renderer, &rect);
 }
