@@ -1,5 +1,6 @@
 #ifndef CREATURE_H
 #define CREATURE_H
+
 #include "utils/vec2.h"
 #include <SDL2/SDL.h>
 #include <map>
@@ -13,15 +14,15 @@ public:
            float reproductivity, float distance_travelled);
   ~Creature();
 
-  void move();
+  void move(vec2<float> delta);
   void attemptEat();
   void attemptReproduce(Creature mate);
   void attemptFight(Creature enemy);
   void die();
   map<int, float> sense();
 
-  void update();
-  void draw();
+  void update(double dT);
+  void draw(SDL_Renderer *renderer);
 
 private:
   float age, max_speed, size, full_health, current_health, max_damage,
