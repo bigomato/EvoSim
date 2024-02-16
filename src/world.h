@@ -3,27 +3,26 @@
 
 #include <SDL2/SDL.h>
 
-class World
-{
+class World {
 public:
-    World();
-    ~World();
+  World();
+  ~World();
 
-    int startSimulation();
+  int startSimulation();
 
 private:
-    int width, height;
-    int w_width, w_height;
-    long double time;
+  int width, height;
+  int w_width, w_height;
+  long double time;
 
-    SDL_Window *window;
-    SDL_Renderer *renderer;
+  SDL_Window *window;
+  SDL_Renderer *renderer;
 
-    void update(double dt);
-    void draw();
-    int init();
-    void loop();
-    void handleEvents(SDL_Event &e, bool &running);
-    void kill();
+  void update(double dt);
+  void draw();
+  int init();
+  void loop();
+  void handleEvents(SDL_Event &e, bool &running);
+  void kill();
 };
 #endif
