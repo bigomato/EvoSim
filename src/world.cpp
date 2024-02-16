@@ -84,6 +84,9 @@ void World::handleEvents(SDL_Event &e, bool &running) {
       if (e.key.keysym.sym == SDLK_ESCAPE) {
         running = false;
       }
+      if (e.key.keysym.sym == SDLK_SPACE) {
+        spawnCreatures(1, 10, 10, 100, 10, 0.1);
+      }
     }
   }
 }
@@ -130,6 +133,9 @@ void World::update(double dt) { time += dt; }
 void World::draw() {
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
   SDL_RenderClear(renderer);
+  for (Creature &c : creatures) {
+    c.draw(renderer);
+  }
 }
 
 /**
@@ -143,4 +149,26 @@ void World::kill() {
   renderer = NULL;
 
   SDL_Quit();
+}
+
+/**
+ * @brief Spawns a number of creatures with given parameters at random
+ * positions.
+ *
+ * @param n The number of creatures to spawn.
+ * @param max_speed The maximum speed of the creatures.
+ * @param size The size of the creatures.
+ * @param full_health The full health of the creatures.
+ * @param max_damage The maximum damage of the creatures.
+ * @param reproductivity The reproductivity of the creatures.
+ */
+void World::spawnCreatures(int n, float max_speed, float size,
+                           float full_health, float max_damage,
+                           float reproductivity) {
+  for (int i = 0; i < n; i++) {
+    Creature c(0, max_speed, size, full_health, full_health, max_damage, 0,
+               reproductivity, 0);
+    c.setPos(vec2<float>(rand() % width, rand() % height));
+    creatures.push_back(c);
+  }
 }
