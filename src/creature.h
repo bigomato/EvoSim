@@ -1,6 +1,7 @@
 #ifndef CREATURE_H
 #define CREATURE_H
 
+#include "brain.h"
 #include "utils/vec2.h"
 #include <SDL2/SDL.h>
 #include <map>
@@ -31,7 +32,7 @@ private:
   bool alive;
   vec2<float> birth_position;
   vec2<float> position;
-  // Brain brain
+  Brain brain;
   // DNA dna
 };
 
