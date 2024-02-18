@@ -3,18 +3,10 @@
 
 class Connection {
 public:
-  Connection(int in, int out, float weight);
-  ~Connection();
+  Connection(int id, int in, int out, double weight);
 
-  int getIn();
-  int getOut();
-  float getWeight();
-
-  void setWeight(float weight);
-
-private:
-  int in, out;
-  float weight;
+  int id, in, out;
+  double weight;
 };
 
 #endif

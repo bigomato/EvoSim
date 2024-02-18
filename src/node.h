@@ -4,19 +4,14 @@
 class Node {
 public:
   Node();
-  ~Node();
+  Node(int id, int type, double value, double bias,
+       double (*activationFunction)(double));
 
-  int getType();
-  float getValue();
-
-  void setType(int type);
-  void setValue(float value);
-
-private:
   int id;
   int type;
-  float value;
-  float bias;
+  double value;
+  double bias;
+  double (*activationFunction)(double);
 };
 
 #endif

@@ -10,22 +10,27 @@
 using std::map;
 using std::vector;
 
+struct NodeValue {
+  int id;
+  double value;
+};
+
 class Brain {
 public:
   Brain();
   ~Brain();
 
-  map<int, float> feed_forward(map<int, float>);
+  void input_node_values(const vector<NodeValue> &node_values);
+  void feedForward();
 
-  int addNode(Node node);
-  int addConnection(Connection connection);
+  void addNode(const Node &node);
+  void addConnection(const Connection &connection);
 
 private:
   vector<Node> nodes;
   vector<Connection> connections;
 
-  Node getNode(int index);
-  Connection getConnection(int index);
+  Node *getNode(int index);
 };
 
 #endif
