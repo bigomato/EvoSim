@@ -3,7 +3,8 @@ project(evosim)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(evosim src/main.cpp src/world.cpp src/world.h src/creature.h src/creature.cpp src/brain.h src/node.h src/connection.h)
+file(GLOB SOURCES "src/*.cpp" "src/*.h")
+add_executable(evosim ${SOURCES})
 
 include(FindPkgConfig)
 
