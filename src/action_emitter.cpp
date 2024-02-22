@@ -1,4 +1,4 @@
-#include "ActionEmitter.h"
+#include "action_emitter.h"
 #include "creature.h"
 #include <cmath>
 

@@ -1,4 +1,4 @@
-#include "InputSensor.h"
+#include "input_sensor.h"
 
 #include "creature.h"
 #include "world.h"
