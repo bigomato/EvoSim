@@ -3,19 +3,21 @@
 
 #include "world.h"
 
-class InputSensor {
+class InputSensor
+{
 public:
-  InputSensor(int node_id);
+  InputSensor(Node &node);
 
   virtual double sense(Creature *creature, World *world) = 0;
 
 protected:
-  int node_id;
+  Node &node;
 };
 
-class VisionSensor : public InputSensor {
+class VisionSensor : public InputSensor
+{
 public:
-  VisionSensor(int node_id, float view_distance, float view_angle);
+  VisionSensor(Node &node, float view_distance, float view_angle);
 
   double sense(Creature *creature, World *world);
 
