@@ -16,9 +16,13 @@ public:
            float reproductivity, float distance_travelled, float angle);
   ~Creature();
 
+  float max_speed;
+
   void move(vec2<float> delta);
   void setPos(vec2<float> pos);
   vec2<float> getPos();
+  float getSpeed();
+  void setSpeed(float speed);
   float getAngle();
   void setAngle(float angle);
   void attemptEat();
@@ -31,8 +35,8 @@ public:
   void draw(SDL_Renderer *renderer);
 
 private:
-  float age, max_speed, size, full_health, current_health, max_damage,
-      reproductice_drive, reproductivity, distance_travelled;
+  float age, size, full_health, current_health, max_damage,
+      reproductice_drive, reproductivity, distance_travelled, speed;
   bool alive;
   vec2<float> birth_position;
   float angle;
