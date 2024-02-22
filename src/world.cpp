@@ -172,3 +172,10 @@ void World::spawnCreatures(int n, float max_speed, float size,
     creatures.push_back(c);
   }
 }
+
+/**
+ * @brief Returns a vector of all creatures in the world.
+ *
+ * @return A vector of all creatures in the world.
+ */
+vector<Creature> World::getCreatures() { return creatures; }

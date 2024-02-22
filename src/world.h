@@ -13,6 +13,7 @@ public:
   ~World();
 
   int startSimulation();
+  vector<Creature> getCreatures();
 
 private:
   int width, height;
