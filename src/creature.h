@@ -17,6 +17,7 @@ public:
 
   void move(vec2<float> delta);
   void setPos(vec2<float> pos);
+  vec2<float> getPos();
   void attemptEat();
   void attemptReproduce(Creature mate);
   void attemptFight(Creature enemy);

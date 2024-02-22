@@ -30,6 +30,8 @@ void Creature::setPos(vec2<float> pos) {
   this->birth_position = pos;
 }
 
+vec2<float> Creature::getPos() { return this->position; }
+
 void Creature::die() { this->alive = false; }
 
 void Creature::update(double dT) {
