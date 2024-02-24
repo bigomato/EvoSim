@@ -26,7 +26,7 @@ public:
 
   void move(vec2<float> delta);
   void setPos(vec2<float> pos);
-  void addInputSensorAndCreateNode(auto &input_sensor, double bias,
+  void addInputSensorAndCreateNode(auto *input_sensor, double bias,
                                    double (*activationFunction)(double));
   vec2<float> getPos();
   float getSpeed();
@@ -38,6 +38,7 @@ public:
   void attemptFight(Creature enemy);
   void die();
   void sense(World *world);
+  Brain *getBrain() { return &brain; }
 
   void update(double dT, World *world);
   void draw(SDL_Renderer *renderer);
