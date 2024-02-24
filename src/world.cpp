@@ -99,6 +99,13 @@ void World::handleEvents(SDL_Event &e, bool &running)
       {
         spawnCreatures(1, 10, 10, 100, 10, 0.1);
       }
+      else if (e.key.keysym.sym == SDLK_RETURN)
+      {
+        printf("Enter pressed\n");
+        Creature *c = &creatures[0];
+        printf("Creature at %f, %f\n", c->getPos().x, c->getPos().y);
+        c->getBrain()->generatePythonCode();
+      }
     }
   }
 }
