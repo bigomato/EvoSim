@@ -1,11 +1,12 @@
 #include "creature.h"
+#include "world.h"
 #include "input_sensor.h"
 #include "utils/vec2.h"
+#include "node.h"
 
 Creature::Creature(float age, float max_speed, float size, float full_health,
                    float current_health, float max_damage,
-                   float reproductice_drive, float reproductivity,
-                   float distance_travelled, float angle)
+                   float reproductice_drive, float reproductivity)
 {
   this->age = age;
   this->max_speed = max_speed;
@@ -15,7 +16,7 @@ Creature::Creature(float age, float max_speed, float size, float full_health,
   this->max_damage = max_damage;
   this->reproductice_drive = reproductice_drive;
   this->reproductivity = reproductivity;
-  this->distance_travelled = distance_travelled;
+  this->distance_travelled = 0;
   this->alive = true;
   this->birth_position = vec2<float>(0, 0);
   this->position = vec2<float>(0, 0);
@@ -44,12 +45,15 @@ float Creature::getAngle() { return this->angle; }
 
 void Creature::die() { this->alive = false; }
 
-void Creature::update(double dT)
+void Creature::update(double dT, World *world)
 {
   if (this->current_health <= 0)
   {
     this->die();
   }
+  this->sense(world);
+  this->brain.feedForward();
+  // Apply the output of the brain to the creature
   this->age += dT;
 }
 
@@ -70,7 +74,21 @@ void Creature::draw(SDL_Renderer *renderer)
   SDL_RenderDrawLine(renderer, this->position.x, this->position.y, end.x, end.y);
 }
 
-void Creature::addInputSensor(InputSensor sensor)
+void Creature::addInputSensorAndCreateNode(auto &sensor, double bias,
+                                           double (*activationFunction)(double))
 {
-  this->sensors.push_back(sensor);
+  Node node = Node(0, bias, activationFunction);
+  sensor.setNode(node);
+  this->brain.addNode(node);
+  this->input_sensors.push_back(sensor);
 }
+
+void Creature::sense(World *world)
+{
+  for (std::shared_ptr<InputSensor> &sensor : this->input_sensors)
+  {
+    sensor->sense(this, world);
+  }
+}
+
+void Creature::setSpeed(float speed) { this->speed = speed; }

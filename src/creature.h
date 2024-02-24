@@ -2,10 +2,15 @@
 #define CREATURE_H
 
 #include "brain.h"
+#include "world.h"
 #include "utils/vec2.h"
 #include "input_sensor.h"
 #include <SDL2/SDL.h>
 #include <map>
+#include <memory>
+
+class InputSensor;
+class World;
 
 using std::map;
 
@@ -14,14 +19,15 @@ class Creature
 public:
   Creature(float age, float max_speed, float size, float full_health,
            float current_health, float max_damage, float reproductice_drive,
-           float reproductivity, float distance_travelled, float angle);
+           float reproductivity);
   ~Creature();
 
   float max_speed;
 
   void move(vec2<float> delta);
   void setPos(vec2<float> pos);
-  void addInputSensor(InputSensor input_sensor);
+  void addInputSensorAndCreateNode(auto &input_sensor, double bias,
+                                   double (*activationFunction)(double));
   vec2<float> getPos();
   float getSpeed();
   void setSpeed(float speed);
@@ -31,9 +37,9 @@ public:
   void attemptReproduce(Creature mate);
   void attemptFight(Creature enemy);
   void die();
-  map<int, float> sense();
+  void sense(World *world);
 
-  void update(double dT);
+  void update(double dT, World *world);
   void draw(SDL_Renderer *renderer);
 
 private:
@@ -44,7 +50,7 @@ private:
   float angle;
   vec2<float> position;
   Brain brain;
-  vector<InputSensor> input_sensors;
+  vector<std::shared_ptr<InputSensor>> input_sensors;
   // DNA dna
 };
 
