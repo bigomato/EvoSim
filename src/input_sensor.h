@@ -2,22 +2,27 @@
 #define INPUT_SENSOR_H
 
 #include "world.h"
+#include "creature.h"
+
+class Creature;
+class World;
 
 class InputSensor
 {
 public:
-  InputSensor(Node &node);
+  InputSensor();
 
   virtual double sense(Creature *creature, World *world) = 0;
+  virtual void setNode(Node *node) { this->node = node; }
 
 protected:
-  Node &node;
+  Node *node;
 };
 
 class VisionSensor : public InputSensor
 {
 public:
-  VisionSensor(Node &node, float view_distance, float view_angle);
+  VisionSensor(float view_distance, float view_angle);
 
   double sense(Creature *creature, World *world);
 

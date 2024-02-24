@@ -4,10 +4,13 @@
 #include "world.h"
 #include <cmath>
 
-InputSensor::InputSensor(Node &node) : node(node) {}
+InputSensor::InputSensor()
+{
+  this->node = nullptr;
+}
 
-VisionSensor::VisionSensor(Node &node, float view_distance, float view_angle)
-    : InputSensor(node)
+VisionSensor::VisionSensor(float view_distance, float view_angle)
+    : InputSensor()
 {
   this->view_distance = view_distance;
   this->view_angle = view_angle;
@@ -43,7 +46,7 @@ double VisionSensor::sense(Creature *creature, World *world)
     // Check if the other creature is within the view distance and angle
     if (distance <= view_distance && std::abs(creatureDirection - std::atan2(otherCreatureY - creature->getPos().y, otherCreatureX - creature->getPos().y)) <= view_angle / 2)
     {
-      node.value = distance;
+      node->value = distance;
     }
   }
 
