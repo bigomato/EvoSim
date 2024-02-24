@@ -13,10 +13,12 @@ public:
   InputSensor();
 
   virtual double sense(Creature *creature, World *world) = 0;
-  virtual void setNode(Node *node) { this->node = node; }
+  void setNode(Node *node) { this->node = node; }
+  void setId(int id) { this->id = id; }
 
 protected:
   Node *node;
+  int id;
 };
 
 class VisionSensor : public InputSensor
