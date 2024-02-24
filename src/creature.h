@@ -3,6 +3,7 @@
 
 #include "brain.h"
 #include "utils/vec2.h"
+#include "input_sensor.h"
 #include <SDL2/SDL.h>
 #include <map>
 
@@ -20,6 +21,7 @@ public:
 
   void move(vec2<float> delta);
   void setPos(vec2<float> pos);
+  void addInputSensor(InputSensor input_sensor);
   vec2<float> getPos();
   float getSpeed();
   void setSpeed(float speed);
@@ -42,6 +44,7 @@ private:
   float angle;
   vec2<float> position;
   Brain brain;
+  vector<InputSensor> input_sensors;
   // DNA dna
 };
 

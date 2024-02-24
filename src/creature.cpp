@@ -1,4 +1,5 @@
 #include "creature.h"
+#include "input_sensor.h"
 #include "utils/vec2.h"
 
 Creature::Creature(float age, float max_speed, float size, float full_health,
@@ -67,4 +68,9 @@ void Creature::draw(SDL_Renderer *renderer)
   SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
 
   SDL_RenderDrawLine(renderer, this->position.x, this->position.y, end.x, end.y);
+}
+
+void Creature::addInputSensor(InputSensor sensor)
+{
+  this->sensors.push_back(sensor);
 }
