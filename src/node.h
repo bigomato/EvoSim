@@ -1,10 +1,13 @@
 #ifndef NODE_H
 #define NODE_H
 
-class Node {
+class Node
+{
 public:
   Node();
   Node(int id, int type, double value, double bias,
+       double (*activationFunction)(double));
+  Node(int type, double bias,
        double (*activationFunction)(double));
 
   int id;
