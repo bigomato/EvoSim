@@ -5,9 +5,12 @@
 #include <SDL2/SDL.h>
 #include <vector>
 
+class Creature;
+
 using std::vector;
 
-class World {
+class World
+{
 public:
   World();
   ~World();

@@ -1,6 +1,8 @@
 #include "world.h"
+#include "creature.h"
 
-World::World() {
+World::World()
+{
   width = 1000;
   height = 1000;
   w_width = 1000;
@@ -16,8 +18,10 @@ World::World() {
  *
  * @return 0 if the simulation completes successfully, 1 otherwise.
  */
-int World::startSimulation() {
-  if (!init()) {
+int World::startSimulation()
+{
+  if (!init())
+  {
     system("pause");
     return 1;
   }
@@ -37,12 +41,14 @@ World::~World() {}
  * handles events, updates the simulation state, and renders the simulation. It
  * continues running until the `running` flag is set to false.
  */
-void World::loop() {
+void World::loop()
+{
   bool running = true;
   Uint32 totalFrameTicks = 0;
   Uint32 totalFrames = 0;
   Uint32 lastUpdate = 0;
-  while (running) {
+  while (running)
+  {
     // Start frame timing
     totalFrames++;
     Uint32 startTicks = SDL_GetTicks();
@@ -75,16 +81,22 @@ void World::loop() {
  * @param e The SDL event to handle.
  * @param running A boolean flag indicating whether the program is running.
  */
-void World::handleEvents(SDL_Event &e, bool &running) {
-  while (SDL_PollEvent(&e) != 0) {
-    if (e.type == SDL_QUIT) {
+void World::handleEvents(SDL_Event &e, bool &running)
+{
+  while (SDL_PollEvent(&e) != 0)
+  {
+    if (e.type == SDL_QUIT)
+    {
       running = false;
     }
-    if (e.type == SDL_KEYDOWN) {
-      if (e.key.keysym.sym == SDLK_ESCAPE) {
+    if (e.type == SDL_KEYDOWN)
+    {
+      if (e.key.keysym.sym == SDLK_ESCAPE)
+      {
         running = false;
       }
-      if (e.key.keysym.sym == SDLK_SPACE) {
+      if (e.key.keysym.sym == SDLK_SPACE)
+      {
         spawnCreatures(1, 10, 10, 100, 10, 0.1);
       }
     }
@@ -99,8 +111,10 @@ void World::handleEvents(SDL_Event &e, bool &running) {
  *
  * @return true if initialization is successful, false otherwise.
  */
-int World::init() {
-  if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+int World::init()
+{
+  if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+  {
     printf("SDL_Error: %s\n", SDL_GetError());
     return false;
   }
@@ -109,13 +123,15 @@ int World::init() {
       SDL_CreateWindow("EvoSim", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                        w_width, w_height, SDL_WINDOW_SHOWN);
 
-  if (!window) {
+  if (!window)
+  {
     printf("Error creating window: %s\n", SDL_GetError());
     return false;
   }
 
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-  if (!renderer) {
+  if (!renderer)
+  {
     printf("Error creating renderer: %s\n", SDL_GetError());
     return false;
   }
@@ -130,10 +146,12 @@ int World::init() {
  */
 void World::update(double dt) { time += dt; }
 
-void World::draw() {
+void World::draw()
+{
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
   SDL_RenderClear(renderer);
-  for (Creature &c : creatures) {
+  for (Creature &c : creatures)
+  {
     c.draw(renderer);
   }
 }
@@ -142,7 +160,8 @@ void World::draw() {
  * @brief Destroys the renderer and window objects, sets them to NULL, and quits
  * SDL.
  */
-void World::kill() {
+void World::kill()
+{
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
   window = NULL;
@@ -164,11 +183,14 @@ void World::kill() {
  */
 void World::spawnCreatures(int n, float max_speed, float size,
                            float full_health, float max_damage,
-                           float reproductivity) {
-  for (int i = 0; i < n; i++) {
+                           float reproductivity)
+{
+  for (int i = 0; i < n; i++)
+  {
     Creature c(0, max_speed, size, full_health, full_health, max_damage, 0,
-               reproductivity, 0);
+               reproductivity);
     c.setPos(vec2<float>(rand() % width, rand() % height));
+    c.setAngle(rand() % 360);
     creatures.push_back(c);
   }
 }
