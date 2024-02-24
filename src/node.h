@@ -4,17 +4,17 @@
 class Node
 {
 public:
-  Node();
-  Node(int id, int type, double value, double bias,
-       double (*activationFunction)(double));
-  Node(int type, double bias,
-       double (*activationFunction)(double));
+     Node(int type, double bias) : id(0), type(type), value(0), bias(bias), activationFunction(nullptr){};
+     Node(int id, int type, double value, double bias,
+          double (*activationFunction)(double));
+     Node(int type, double bias,
+          double (*lambda)(double x));
 
-  int id;
-  int type;
-  double value;
-  double bias;
-  double (*activationFunction)(double);
+     int id;
+     int type;
+     double value;
+     double bias;
+     double (*activationFunction)(double x);
 };
 
 #endif
