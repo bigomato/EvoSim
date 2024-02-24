@@ -6,16 +6,19 @@
 
 #include "connection.h"
 #include "node.h"
+#include <string>
 
 using std::map;
+using std::string;
 using std::vector;
-
-struct NodeValue {
+struct NodeValue
+{
   int id;
   double value;
 };
 
-class Brain {
+class Brain
+{
 public:
   Brain();
   ~Brain();
@@ -23,8 +26,9 @@ public:
   void input_node_values(const vector<NodeValue> &node_values);
   void feedForward();
 
-  void addNode(const Node &node);
+  void addNode(const Node *node);
   void addConnection(const Connection &connection);
+  string generatePythonCode();
 
 private:
   vector<Node> nodes;
