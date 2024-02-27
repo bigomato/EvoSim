@@ -31,8 +31,8 @@ public:
   string generatePythonCode();
 
 private:
-  vector<Node> nodes;
-  vector<Connection> connections;
+  vector<Node *> nodes;
+  vector<Connection *> connections;
 
   Node *getNode(int index);
 };
