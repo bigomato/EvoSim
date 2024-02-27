@@ -9,8 +9,8 @@
 
 Brain::Brain()
 {
-  nodes = std::vector<Node>();
-  connections = std::vector<Connection>();
+  nodes = std::vector<Node *>();
+  connections = std::vector<Connection *>();
 }
 
 Brain::~Brain()
@@ -26,7 +26,7 @@ void Brain::addNode(Node *node)
     node->id = nodes.size();
     std::printf("Node id not set, setting to %d\n", node->id);
   }
-  nodes.push_back(*node);
+  nodes.push_back(node);
 }
 
 void Brain::addConnection(Connection *connection)
@@ -36,7 +36,7 @@ void Brain::addConnection(Connection *connection)
     connection->id = connections.size();
     std::printf("Connection id not set, setting to %d\n", connection->id);
   }
-  connections.push_back(*connection);
+  connections.push_back(connection);
 }
 
 string Brain::generatePythonCode()
@@ -61,16 +61,17 @@ string Brain::generatePythonCode()
   };
 
   std::string code = "from brain import Brain\n";
+
   code += "from node import Node\n";
   code += "from connection import Connection\n";
   code += "brain = Brain()\n";
-  for (auto &node : nodes)
+  for (const Node *node : nodes)
   {
-    code += "brain.add_node(Node(" + std::to_string(node.id) + ", '" + node_types[node.type] + "'))\n";
+    code += "brain.add_node(Node(" + std::to_string(node->id) + ", '" + node_types[node->type] + "'))\n";
   }
-  for (auto &connection : connections)
+  for (const Connection *connection : connections)
   {
-    code += "brain.add_connection(Connection(" + std::to_string(connection.id) + ", " + std::to_string(connection.in) + ", " + std::to_string(connection.out) + "))\n";
+    code += "brain.add_connection(Connection(" + std::to_string(connection->id) + ", " + std::to_string(connection->in) + ", " + std::to_string(connection->out) + "))\n";
   }
 
   std::ofstream out;
@@ -82,11 +83,11 @@ string Brain::generatePythonCode()
 
 Node *Brain::getNode(int id)
 {
-  for (auto &node : nodes)
+  for (Node *node : nodes)
   {
-    if (node.id == id)
+    if (node->id == id)
     {
-      return &node;
+      return node;
     }
   }
   return nullptr;
@@ -94,7 +95,7 @@ Node *Brain::getNode(int id)
 
 void Brain::input_node_values(const std::vector<NodeValue> &node_values)
 {
-  for (auto &node_value : node_values)
+  for (const NodeValue node_value : node_values)
   {
     Node *node = getNode(node_value.id);
     if (node != nullptr)
@@ -112,7 +113,7 @@ void Brain::feedForward()
 {
   for (auto &node : nodes)
   {
-    if (node.type == 0)
+    if (node->type == 0)
     { // input node
       continue;
     }
@@ -120,26 +121,26 @@ void Brain::feedForward()
     double sum = 0;
     for (auto &connection : connections)
     {
-      if (connection.out == node.id)
+      if (connection->out == node->id)
       {
-        Node *inNode = getNode(connection.in);
+        Node *inNode = getNode(connection->in);
         if (inNode == nullptr)
         {
-          printf("Node with id %d not found\n", connection.in);
+          printf("Node with id %d not found\n", connection->in);
           continue;
         }
-        sum += inNode->value * connection.weight;
+        sum += inNode->value * connection->weight;
       }
     }
-    if (node.activationFunction == nullptr)
+    if (node->activationFunction == nullptr)
     {
-      printf("Activation function not set for node with id %d\n", node.id);
-      printf("Using default activation function\n");
-      node.value = 1 / (1 + exp(sum + node.bias));
+      // printf("Activation function not set for node with id %d\n", node->id);
+      // printf("Using default activation function\n");
+      node->value = 1 / (1 + exp(sum + node->bias));
     }
-    else if (node.activationFunction != nullptr)
+    else if (node->activationFunction != nullptr)
     {
-      node.value = node.activationFunction(sum + node.bias);
+      node->value = node->activationFunction(sum + node->bias);
     }
   }
 }
