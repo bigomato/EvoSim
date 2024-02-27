@@ -96,12 +96,12 @@ void Creature::addInputSensorAndCreateNode(auto *sensor, double bias,
   this->input_sensors.back()->setId(this->input_sensors.size() - 1);
 }
 
-void Creature::addNodeToBrain(const Node *node) { this->brain.addNode(node); }
+void Creature::addNodeToBrain(Node *node) { this->brain.addNode(node); }
 
 void Creature::addActionEmitterAndCreateNode(auto *action_emitter, double bias,
                                              double (*activationFunction)(double x))
 {
-  Node *node = new Node(1, bias);
+  Node *node = new Node(2, bias);
   action_emitter->setNode(node);
   this->brain.addNode(node);
   this->action_emitters.push_back(std::shared_ptr<ActionEmitter>(action_emitter));

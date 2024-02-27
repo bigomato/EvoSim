@@ -43,7 +43,7 @@ public:
   void die();
   void sense(World *world);
   Brain *getBrain() { return &brain; }
-  void addNodeToBrain(const Node *node);
+  void addNodeToBrain(Node *node);
 
   void update(double dT, World *world);
   void draw(SDL_Renderer *renderer);
