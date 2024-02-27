@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <cmath>
 
 Brain::Brain()
 {
@@ -125,6 +126,15 @@ void Brain::feedForward()
         sum += inNode->value * connection.weight;
       }
     }
-    node.value = node.activationFunction(sum + node.bias);
+    if (node.activationFunction == nullptr)
+    {
+      printf("Activation function not set for node with id %d\n", node.id);
+      printf("Using default activation function\n");
+      node.value = 1 / (1 + exp(sum + node.bias));
+    }
+    else if (node.activationFunction != nullptr)
+    {
+      node.value = node.activationFunction(sum + node.bias);
+    }
   }
 }
