@@ -2,9 +2,11 @@
 #include "creature.h"
 #include "world.h"
 #include "input_sensor.h"
+#include "action_emitter.h"
 #include "utils/vec2.h"
 
 class Node;
+class ActionEmitter;
 
 Creature::Creature(float age, float max_speed, float size, float full_health,
                    float current_health, float max_damage,
@@ -29,6 +31,8 @@ Creature::Creature(float age, float max_speed, float size, float full_health,
   VisionSensor sensor = VisionSensor(50, 90);
 
   this->addInputSensorAndCreateNode(&sensor, 0.0, activationFunction);
+  MoveSpeedEmitter emitter = MoveSpeedEmitter(1);
+  this->addActionEmitterAndCreateNode(&emitter, 0.0, activationFunction);
 }
 
 Creature::~Creature() {}
@@ -90,6 +94,18 @@ void Creature::addInputSensorAndCreateNode(auto *sensor, double bias,
   this->brain.addNode(node);
   this->input_sensors.push_back(std::shared_ptr<InputSensor>(sensor));
   this->input_sensors.back()->setId(this->input_sensors.size() - 1);
+}
+
+void Creature::addNodeToBrain(const Node *node) { this->brain.addNode(node); }
+
+void Creature::addActionEmitterAndCreateNode(auto *action_emitter, double bias,
+                                             double (*activationFunction)(double x))
+{
+  Node *node = new Node(1, bias);
+  action_emitter->setNode(node);
+  this->brain.addNode(node);
+  this->action_emitters.push_back(std::shared_ptr<ActionEmitter>(action_emitter));
+  this->action_emitters.back()->setId(this->action_emitters.size() - 1);
 }
 
 void Creature::sense(World *world)

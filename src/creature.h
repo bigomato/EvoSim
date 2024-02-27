@@ -8,7 +8,9 @@
 #include <SDL2/SDL.h>
 #include <map>
 #include <memory>
+#include "action_emitter.h"
 
+class ActionEmitter;
 class InputSensor;
 class World;
 
@@ -28,6 +30,8 @@ public:
   void setPos(vec2<float> pos);
   void addInputSensorAndCreateNode(auto *input_sensor, double bias,
                                    double (*activationFunction)(double));
+  void addActionEmitterAndCreateNode(auto *action_emitter, double bias,
+                                     double (*activationFunction)(double));
   vec2<float> getPos();
   float getSpeed();
   void setSpeed(float speed);
@@ -39,6 +43,7 @@ public:
   void die();
   void sense(World *world);
   Brain *getBrain() { return &brain; }
+  void addNodeToBrain(const Node *node);
 
   void update(double dT, World *world);
   void draw(SDL_Renderer *renderer);
@@ -52,6 +57,7 @@ private:
   vec2<float> position;
   Brain brain;
   vector<std::shared_ptr<InputSensor>> input_sensors;
+  vector<std::shared_ptr<ActionEmitter>> action_emitters;
   // DNA dna
 };
 
