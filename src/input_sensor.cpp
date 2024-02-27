@@ -47,8 +47,10 @@ double VisionSensor::sense(Creature *creature, World *world)
     if (distance <= view_distance && std::abs(creatureDirection - std::atan2(otherCreatureY - creature->getPos().y, otherCreatureX - creature->getPos().y)) <= view_angle / 2)
     {
       node->value = distance;
+      return distance;
     }
   }
+  node->value = 0.0;
 
   // Return the sensed value
   return 0.0; // Replace with the actual sensed value
