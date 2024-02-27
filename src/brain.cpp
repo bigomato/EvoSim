@@ -18,7 +18,15 @@ Brain::~Brain()
   connections.clear();
 }
 
-void Brain::addNode(const Node *node) { nodes.push_back(*node); }
+void Brain::addNode(Node *node)
+{
+  if (node->id == -1)
+  {
+    node->id = nodes.size();
+    std::printf("Node id not set, setting to %d\n", node->id);
+  }
+  nodes.push_back(*node);
+}
 
 void Brain::addConnection(const Connection &connection)
 {

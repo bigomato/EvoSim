@@ -26,7 +26,7 @@ public:
   void input_node_values(const vector<NodeValue> &node_values);
   void feedForward();
 
-  void addNode(const Node *node);
+  void addNode(Node *node);
   void addConnection(const Connection &connection);
   string generatePythonCode();
 
