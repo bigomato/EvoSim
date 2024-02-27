@@ -27,7 +27,7 @@ public:
   void feedForward();
 
   void addNode(Node *node);
-  void addConnection(const Connection &connection);
+  void addConnection(Connection *connection);
   string generatePythonCode();
 
 private:

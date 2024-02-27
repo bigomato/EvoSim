@@ -29,9 +29,14 @@ void Brain::addNode(Node *node)
   nodes.push_back(*node);
 }
 
-void Brain::addConnection(const Connection &connection)
+void Brain::addConnection(Connection *connection)
 {
-  connections.push_back(connection);
+  if (connection->id == -1)
+  {
+    connection->id = connections.size();
+    std::printf("Connection id not set, setting to %d\n", connection->id);
+  }
+  connections.push_back(*connection);
 }
 
 string Brain::generatePythonCode()
