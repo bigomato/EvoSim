@@ -14,6 +14,7 @@ public:
     virtual void emit(Creature *creature) = 0;
     void setNode(Node *node) { this->node = node; }
     void setId(int id) { this->id = id; }
+    Node *getNode() { return this->node; }
 
 protected:
     Node *node;
