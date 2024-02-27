@@ -28,13 +28,13 @@ Creature::Creature(float age, float max_speed, float size, float full_health,
 
   double (*activationFunction)(double) = [](double x)
   { return x; };
-  VisionSensor *sensor = new VisionSensor(50, 90);
+  VisionSensor *sensor = new VisionSensor(0, 90);
 
   this->addInputSensorAndCreateNode(sensor, 0.0, activationFunction);
-  MoveSpeedEmitter emitter = MoveSpeedEmitter(1);
-  this->addActionEmitterAndCreateNode(&emitter, 0.0, activationFunction);
+  MoveSpeedEmitter *emitter = new MoveSpeedEmitter(1);
+  this->addActionEmitterAndCreateNode(emitter, 0, activationFunction);
 
-  Connection *conn = new Connection(0, 1, 1);
+  Connection *conn = new Connection(0, 1, 0);
   this->brain.addConnection(conn);
 }
 
@@ -69,6 +69,11 @@ void Creature::update(double dT, World *world)
   this->sense(world);
   this->brain.feedForward();
   // Apply the output of the brain to the creature
+  for (std::shared_ptr<ActionEmitter> &sensor : this->action_emitters)
+  {
+    sensor->emit(this);
+  }
+  this->move(vec2<float>(cos(getAngle()), sin(getAngle())) * this->speed * dT);
   this->age += dT;
 }
 
