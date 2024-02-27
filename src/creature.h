@@ -44,6 +44,7 @@ public:
   void sense(World *world);
   Brain *getBrain() { return &brain; }
   void addNodeToBrain(Node *node);
+  void addConnectionToBrain(Connection *connection);
 
   void update(double dT, World *world);
   void draw(SDL_Renderer *renderer);

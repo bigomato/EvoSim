@@ -28,11 +28,14 @@ Creature::Creature(float age, float max_speed, float size, float full_health,
 
   double (*activationFunction)(double) = [](double x)
   { return x; };
-  VisionSensor sensor = VisionSensor(50, 90);
+  VisionSensor *sensor = new VisionSensor(50, 90);
 
-  this->addInputSensorAndCreateNode(&sensor, 0.0, activationFunction);
+  this->addInputSensorAndCreateNode(sensor, 0.0, activationFunction);
   MoveSpeedEmitter emitter = MoveSpeedEmitter(1);
   this->addActionEmitterAndCreateNode(&emitter, 0.0, activationFunction);
+
+  Connection *conn = new Connection(0, 1, 1);
+  this->brain.addConnection(conn);
 }
 
 Creature::~Creature() {}
