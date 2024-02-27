@@ -97,7 +97,7 @@ void World::handleEvents(SDL_Event &e, bool &running)
       }
       if (e.key.keysym.sym == SDLK_SPACE)
       {
-        spawnCreatures(1, 10, 10, 100, 10, 0.1);
+        spawnCreatures(100, 0.1, 10, 100, 10, 0.1);
       }
       else if (e.key.keysym.sym == SDLK_RETURN)
       {
@@ -151,7 +151,21 @@ int World::init()
  *
  * @param dt The delta time to advance the world by.
  */
-void World::update(double dt) { time += dt; }
+void World::update(double dt)
+{
+  time += dt;
+  for (Creature &c : creatures)
+  {
+    // check if creature is out of bounds
+    if (c.getPos().x < 0 || c.getPos().x > width || c.getPos().y < 0 ||
+        c.getPos().y > height)
+    {
+      // delete creature
+      c.die();
+    }
+    c.update(dt, this);
+  }
+}
 
 void World::draw()
 {
