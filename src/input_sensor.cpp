@@ -23,6 +23,8 @@ double VisionSensor::sense(Creature *creature, World *world)
   // Direction of the creature + sensor angle/2 (right) and -sensor angle/2 (left)
 
   // Get the direction of the creature
+  node->value = 0.0;
+  return 0.0; // Replace with the actual sensed value
   float creatureDirection = creature->getAngle();
 
   // Calculate the start and end angles for ray casting
