@@ -26,13 +26,11 @@ Creature::Creature(float age, float max_speed, float size, float full_health,
   this->position = vec2<float>(0, 0);
   this->angle = angle;
 
-  double (*activationFunction)(double) = [](double x)
-  { return x; };
   VisionSensor *sensor = new VisionSensor(0, 90);
 
-  this->addInputSensorAndCreateNode(sensor, 0.0, activationFunction);
+  this->addInputSensorAndCreateNode(sensor, 0.0, 0);
   MoveSpeedEmitter *emitter = new MoveSpeedEmitter(1);
-  this->addActionEmitterAndCreateNode(emitter, 0, activationFunction);
+  this->addActionEmitterAndCreateNode(emitter, 0, 0);
 
   Connection *conn = new Connection(0, 1, 0);
   this->brain.addConnection(conn);
@@ -95,9 +93,9 @@ void Creature::draw(SDL_Renderer *renderer)
 }
 
 void Creature::addInputSensorAndCreateNode(auto *sensor, double bias,
-                                           double (*activationFunction)(double x))
+                                           int activationFunction)
 {
-  Node *node = new Node(0, bias);
+  Node *node = new Node(0, bias, activationFunction);
   sensor->setNode(node);
   this->brain.addNode(node);
   this->input_sensors.push_back(std::shared_ptr<InputSensor>(sensor));
@@ -107,9 +105,9 @@ void Creature::addInputSensorAndCreateNode(auto *sensor, double bias,
 void Creature::addNodeToBrain(Node *node) { this->brain.addNode(node); }
 
 void Creature::addActionEmitterAndCreateNode(auto *action_emitter, double bias,
-                                             double (*activationFunction)(double x))
+                                             int activationFunction)
 {
-  Node *node = new Node(2, bias);
+  Node *node = new Node(2, bias, activationFunction);
   action_emitter->setNode(node);
   this->brain.addNode(node);
   this->action_emitters.push_back(std::shared_ptr<ActionEmitter>(action_emitter));
