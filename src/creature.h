@@ -29,9 +29,9 @@ public:
   void move(vec2<float> delta);
   void setPos(vec2<float> pos);
   void addInputSensorAndCreateNode(auto *input_sensor, double bias,
-                                   double (*activationFunction)(double));
+                                   int activationFunction);
   void addActionEmitterAndCreateNode(auto *action_emitter, double bias,
-                                     double (*activationFunction)(double));
+                                     int activationFunction);
   vec2<float> getPos();
   float getSpeed();
   void setSpeed(float speed);
